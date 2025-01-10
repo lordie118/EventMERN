@@ -48,16 +48,17 @@ exports.deleteEvent = async (req, res) => {
 
 exports.addUserToEvent = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { userId } = req.body;
-
+    const { eventId } = req.params;
+    const { userId } = req.body;  // S'assurer que userId est bien passé dans req.body
+  
     // Vérification de l'événement et de l'utilisateur
-    const event = await Event.findById(id);
+    const event = await Event.findById(eventId);
     const user = await Participant.findById(userId);
     if (!event || !user) {
       return res.status(404).json({ message: 'Événement ou utilisateur non trouvé.' });
     }
-
+ 
+    
     // Vérifier si l'utilisateur est déjà inscrit à l'événement
     if (event.participants.includes(userId)) {
       return res.status(400).json({ message: 'Utilisateur déjà inscrit à cet événement.' });
@@ -65,7 +66,7 @@ exports.addUserToEvent = async (req, res) => {
 
     // Ajouter l'utilisateur à l'événement
     event.participants.push(userId);
-    user.evenementsInscrits.push(id);
+    user.evenementsInscrits.push(eventId);  // Utiliser eventId et non pas id
     await event.save();
     await user.save();
 
@@ -85,6 +86,16 @@ exports.getUserEvents = async (req, res) => {
       return res.status(404).json({ message: 'Utilisateur non trouvé.' });
     }
     res.status(200).json({ message: 'Événements de l\'utilisateur', events: user.evenementsInscrits });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getAllEvents = async (req, res) => {
+  try {
+    const events = await Event.find().populate('createdBy').populate('participants');
+
+    res.status(200).json({ message: 'Liste des événements', events });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

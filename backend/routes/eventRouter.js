@@ -10,6 +10,7 @@ router.post('/events',authenticateToken,checkAdmin,eventController.createEvent);
 router.put('/events/:id',authenticateToken,checkAdmin, eventController.updateEvent);
 router.delete('/events/:id',authenticateToken,checkAdmin, eventController.deleteEvent);
 
-router.post('/events/:id/adduser', authenticateToken, eventController.addUserToEvent);
+router.post('/events/:eventId/adduser', eventController.addUserToEvent);
 router.get('/users/events', authenticateToken, eventController.getUserEvents);
+router.get('/events',eventController.getAllEvents);
 module.exports = router;

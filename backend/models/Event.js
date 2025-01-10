@@ -4,8 +4,9 @@ const eventSchema = new mongoose.Schema({
   nom: { type: String, required: true },
   description: { type: String, required: true },
   date: { type: Date, required: true },
-  mode: { type: String, enum: ['en ligne', 'présentiel'], required: true },
+  mode: { type: String, enum: ['enligne', 'présentiel'], required: true },
   lien: { type: String },
+  photo: { type: String },
   createdBy: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Participant', 

@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, motDePasse } = req.body;
-
+   
   try {
     const participant = await Participant.findOne({ email });
     if (!participant) {
@@ -41,10 +41,23 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Email ou mot de passe incorrect' });
     }
 
-    const token = jwt.sign({ _id: participant._id, role: participant.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ _id: participant._id, role: participant.role }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
     res.status(200).json({ message: 'Connexion réussie', token });
   } catch (error) {
+    res.status(500).json({ message: 'Erreur du serveur' });
+  }
+};
+
+exports.logout = (req, res) => {
+  try {
+    // Clear the token stored in the cookie by setting it to an empty value
+    res.clearCookie('user_token'); // This assumes the token is stored in a cookie called 'token'
+
+    // Send a success response
+    res.status(200).json({ message: 'Déconnexion réussie' });
+  } catch (error) {
+    // In case of error, send an error response
     res.status(500).json({ message: 'Erreur du serveur' });
   }
 };

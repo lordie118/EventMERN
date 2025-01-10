@@ -8,9 +8,17 @@ import MarketingPage from './components/LandingPage/marketing-page/MarketingPage
 import Dashboard from './components/Dashboard/dashboard/Dashboard';
 import UDashboard from './components/UserDashboard/dashboard/Dashboard';
 import PrivateRoute from './components/midllewear/PrivateRoute';
+import { useDispatch } from 'react-redux';
+import { initializeUser } from './redux/slices/ConnectedSlice';
+import { useEffect } from 'react';
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeUser()); // Appeler initializeUser au chargement
+  }, [dispatch]);
   return (
 
     <div>
