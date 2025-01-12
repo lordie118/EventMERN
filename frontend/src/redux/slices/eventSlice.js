@@ -36,7 +36,14 @@ export const enrollEvent = createAsyncThunk(
   );
 
   export const getUserEvents = createAsyncThunk('events/getUserEvents', async () => {
-    const response = await axios.get('http://localhost:3000/api/users/events');
+    // Récupérez le token depuis le localStorage ou le state de votre application
+    const token = localStorage.getItem('user_token');  // ou un autre endroit où vous stockez le token
+
+    const response = await axios.get('http://localhost:3000/api/users/events', {
+        headers: {
+            Authorization: `Bearer ${token}`  // Ajoutez le token dans les en-têtes
+        }
+    });
     return response.data.events;
 });
   

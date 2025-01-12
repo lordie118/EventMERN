@@ -11,6 +11,7 @@ import PrivateRoute from './components/midllewear/PrivateRoute';
 import { useDispatch } from 'react-redux';
 import { initializeUser } from './redux/slices/ConnectedSlice';
 import { useEffect } from 'react';
+import AddEvent from './components/Dashboard/dashboard/components/AddEvent';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
 
   <Route element = {<PrivateRoute />}>
   <Route path="/dashboard" element = {<Dashboard />}/> 
+  <Route path="/addevent" element = {<AddEvent />}/> 
   <Route path="/userdashboard" element = {<UDashboard />}/> 
   </Route>
   

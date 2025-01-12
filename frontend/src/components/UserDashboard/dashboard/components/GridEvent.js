@@ -86,7 +86,22 @@ export default function GridEvent() {
         </CRow>
       </CContainer>
 
-      <h1 style={{ textAlign: 'center', margin: '20px 0' }}>VOS ÉVÉNEMENTS</h1>
+      <div className="bg-violet-300
+                        text-white py-10 px-5">
+            <div className="container mx-auto
+                            text-center">
+                <h1 className="text-5xl 
+                               font-bold mb-4">
+                   Vos Events  
+                </h1>
+                <p className="text-xl mb-6">
+                    Join us to explore
+                    the amazing features
+                    we offer!
+                </p>
+             
+            </div>
+        </div>
       <CContainer>
         <CRow xs={{ cols: 3 }}>
           {userEvents.map((event, index) => (
@@ -152,22 +167,7 @@ export default function GridEvent() {
           </CButton>
         </CModalFooter>
       </CModal>
-      <div className="bg-violet-300
-                        text-white py-10 px-5">
-            <div className="container mx-auto
-                            text-center">
-                <h1 className="text-5xl 
-                               font-bold mb-4">
-                   Vos Events  
-                </h1>
-                <p className="text-xl mb-6">
-                    Join us to explore
-                    the amazing features
-                    we offer!
-                </p>
-             
-            </div>
-        </div>
+      
     </div>
   );
 }

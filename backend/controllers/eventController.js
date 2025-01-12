@@ -1,26 +1,44 @@
 const Event = require('../models/Event');
 const Participant = require('../models/Participant');
+const multer = require('multer');
+const path = require('path');
 
-exports.createEvent = async (req, res) => {
-  try {
-    if (!req.user || !req.user._id) {
-      return res.status(400).json({ message: 'Utilisateur non authentifié' });
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+exports.createEvent = [
+  upload.single('photo'), // Middleware to handle file upload
+  async (req, res) => {
+    try {
+      if (!req.user || !req.user._id) {
+        return res.status(400).json({ message: 'Utilisateur non authentifié' });
+      }
+      const newEvent = new Event({
+        nom: req.body.nom,
+        description: req.body.description,
+        date: req.body.date,
+        mode: req.body.mode,
+        lien: req.body.lien,
+        photo: req.file ? req.file.path : null, // Save the photo path
+        createdBy: req.user._id // L'utilisateur qui crée l'événement (organisateur)
+      });
+
+      await newEvent.save();
+      res.status(201).json({ message: 'Événement créé avec succès', event: newEvent });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-    const newEvent = new Event({
-      nom: req.body.nom,
-      description: req.body.description,
-      date: req.body.date,
-      mode: req.body.mode,
-      lien: req.body.lien,
-      createdBy: req.user._id // L'utilisateur qui crée l'événement (organisateur)
-    });
-
-    await newEvent.save();
-    res.status(201).json({ message: 'Événement créé avec succès', event: newEvent });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
-};
+];
 
 exports.updateEvent = async (req, res) => {
   try {
@@ -58,7 +76,6 @@ exports.addUserToEvent = async (req, res) => {
       return res.status(404).json({ message: 'Événement ou utilisateur non trouvé.' });
     }
  
-    
     // Vérifier si l'utilisateur est déjà inscrit à l'événement
     if (event.participants.includes(userId)) {
       return res.status(400).json({ message: 'Utilisateur déjà inscrit à cet événement.' });
