@@ -42,22 +42,7 @@ export default function SideMenu() {
           p: 1.5,
         }}
       >
-        <SelectContent />
-      </Box>
-      <Divider />
-      <MenuContent />
-      <CardAlert />
-      <Stack
-        direction="row"
-        sx={{
-          p: 2,
-          gap: 1,
-          alignItems: 'center',
-          borderTop: '1px solid',
-          borderColor: 'divider',
-        }}
-      >
-        <Avatar
+               <Avatar
           sizes="small"
           alt="Riley Carter"
           src="/static/images/avatar/7.jpg"
@@ -72,6 +57,21 @@ export default function SideMenu() {
           </Typography>
         </Box>
         <OptionsMenu />
+      </Box>
+      <Divider />
+      <MenuContent />
+  
+      <Stack
+        direction="row"
+        sx={{
+          p: 2,
+          gap: 1,
+          alignItems: 'center',
+          borderTop: '1px solid',
+          borderColor: 'divider',
+        }}
+      >
+
       </Stack>
     </Drawer>
   );

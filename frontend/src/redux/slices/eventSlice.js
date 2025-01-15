@@ -8,7 +8,13 @@ export const fetchEvents = createAsyncThunk('events/fetchEvents', async () => {
 });
 
 export const addEvent = createAsyncThunk('events/addEvent', async (event) => {
-    const response = await axios.post('/api/events', event);
+    const token = localStorage.getItem('user_token');  // ou un autre endroit où vous stockez le token
+
+    const response = await axios.post('http://localhost:3000/api/events', event, {
+        headers: {
+            Authorization: `Bearer ${token}`  // Ajoutez le token dans les en-têtes
+        }
+    });;
     return response.data;
 });
 

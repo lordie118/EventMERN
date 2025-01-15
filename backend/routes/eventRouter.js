@@ -2,15 +2,15 @@ const express = require('express');
 const eventController = require('../controllers/eventController');
 const checkAdmin = require('../middlewear/checkadmin');
 const authenticateToken = require('../middlewear/authenticateToken');
-
+const upload = require('../middlewear/upload');
 const router = express.Router();
 
-router.post('/events',authenticateToken,checkAdmin,eventController.createEvent);
+router.post('/events',authenticateToken,checkAdmin,upload.single('photo'),eventController.createEvent);
 
 router.put('/events/:id',authenticateToken,checkAdmin, eventController.updateEvent);
 router.delete('/events/:id',authenticateToken,checkAdmin, eventController.deleteEvent);
 
-router.post('/events/:eventId/adduser', eventController.addUserToEvent);
+router.post('/events/:eventId/adduser', eventController.addUserToEvent); 
 router.get('/users/events', authenticateToken, eventController.getUserEvents);
 router.get('/events',eventController.getAllEvents);
 module.exports = router;

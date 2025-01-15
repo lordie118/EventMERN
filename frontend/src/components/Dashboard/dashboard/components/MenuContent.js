@@ -14,52 +14,86 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import {Link} from 'react-router-dom';
 export default function MenuContent() {
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
+        <Link to="/dashboard" style={{ textDecoration: 'none', color: 'black' }}>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={selectedIndex === 0}
+              onClick={(event) => handleListItemClick(event, 0)}
+            >
+              <ListItemIcon><HomeRoundedIcon /></ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+
+        <Link to="/addevent" style={{ textDecoration: 'none', color: 'black' }}>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={selectedIndex === 1}
+              onClick={(event) => handleListItemClick(event, 1)}
+            >
+              <ListItemIcon><AnalyticsRoundedIcon /></ListItemIcon>
+              <ListItemText primary="Gerer les evenements" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton selected>
-            <ListItemIcon><HomeRoundedIcon /></ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding sx={{ display: 'block' }}>
-         <Link to="/addevent"> 
-         <ListItemButton>
-            <ListItemIcon><AnalyticsRoundedIcon /></ListItemIcon>
-            <ListItemText primary="Gerer les evenements" />
-          </ListItemButton>
-         </Link>
-        </ListItem>
-        <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 2}
+            onClick={(event) => handleListItemClick(event, 2)}
+          >
             <ListItemIcon><PeopleRoundedIcon /></ListItemIcon>
             <ListItemText primary="Clients" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 3}
+            onClick={(event) => handleListItemClick(event, 3)}
+          >
             <ListItemIcon><AssignmentRoundedIcon /></ListItemIcon>
-            <ListItemText primary="Tasks" />
+            <ListItemText primary="" />
           </ListItemButton>
         </ListItem>
       </List>
 
       <List dense>
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 4}
+            onClick={(event) => handleListItemClick(event, 4)}
+          >
             <ListItemIcon><SettingsRoundedIcon /></ListItemIcon>
             <ListItemText primary="Settings" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 5}
+            onClick={(event) => handleListItemClick(event, 5)}
+          >
             <ListItemIcon><InfoRoundedIcon /></ListItemIcon>
             <ListItemText primary="About" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton>
+          <ListItemButton
+            selected={selectedIndex === 6}
+            onClick={(event) => handleListItemClick(event, 6)}
+          >
             <ListItemIcon><HelpRoundedIcon /></ListItemIcon>
             <ListItemText primary="Feedback" />
           </ListItemButton>

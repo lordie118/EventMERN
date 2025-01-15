@@ -2,11 +2,18 @@ const Event = require('../models/Event');
 const Participant = require('../models/Participant');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+// Configure multer for file uploads
+const uploadDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -16,26 +23,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 exports.createEvent = [
-  upload.single('photo'), // Middleware to handle file upload
+   
   async (req, res) => {
+    const { nom, description, date, mode, lien } = req.body;
+    let photo = '';
+  
+    if (req.file) {
+      photo = `/uploads/${req.file.filename}`;
+    }
+  
     try {
-      if (!req.user || !req.user._id) {
-        return res.status(400).json({ message: 'Utilisateur non authentifié' });
-      }
-      const newEvent = new Event({
-        nom: req.body.nom,
-        description: req.body.description,
-        date: req.body.date,
-        mode: req.body.mode,
-        lien: req.body.lien,
-        photo: req.file ? req.file.path : null, // Save the photo path
-        createdBy: req.user._id // L'utilisateur qui crée l'événement (organisateur)
-      });
-
-      await newEvent.save();
-      res.status(201).json({ message: 'Événement créé avec succès', event: newEvent });
+      const event = await Event.create({ nom, description, date, mode, lien,photo, createdBy: req.user._id });
+      res.status(201).json(event);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      console.error(error); 
+      res.status(500).json({ msg: error.message });
     }
   }
 ];
@@ -110,7 +112,7 @@ exports.getUserEvents = async (req, res) => {
 
 exports.getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find().populate('createdBy').populate('participants');
+    const events = await Event.find().populate('createdBy', 'nom').populate('participants', 'nom');
 
     res.status(200).json({ message: 'Liste des événements', events });
   } catch (error) {

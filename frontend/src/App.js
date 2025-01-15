@@ -33,6 +33,7 @@ function App() {
   <Route path="/signin" element = {<SignInSide />}/>
   <Route path="/signup" element = {<SignUp />}/>
   <Route path="/home" element = {<MarketingPage />}/> 
+  {/* <Route path="/e" element = {<AllEvents />}/>  */}
 
 
   <Route element = {<PrivateRoute />}>
