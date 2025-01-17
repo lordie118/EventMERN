@@ -105,6 +105,9 @@ function AddForm() {
               </form>
             </div>
           </div>
+          <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+         Users Details
+      </Typography>
         </div>
     
   )

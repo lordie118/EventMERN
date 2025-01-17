@@ -123,6 +123,8 @@ export const columns = [
 export default function EventTable() {
   const events = useSelector((state) => state.events.events || []);
   const dispatch = useDispatch();
+  console.log("les events ",events);
+  
 
   useEffect(() => {
     dispatch(fetchEvents());

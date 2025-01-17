@@ -89,7 +89,8 @@ export default function SignUp(props) {
     try {
     const  response = await dispatch(login(signinData)).unwrap();
       toast.success('Successfully login!')
-
+     console.log(signinData);
+     
       setEmail('');
       setMotDePasse('');
  

@@ -13,6 +13,7 @@ import {
   dataGridCustomizations,
 
 } from '../theme/customizations';
+import AlllUser from './AlllUser';
 
 const xThemeComponents = {
  
@@ -55,7 +56,7 @@ function AddEvent() {
           >
             <Header />
           <AddForm />
-          <AllEvents />
+          <AlllUser />
           </Stack>
           
           </Box>
