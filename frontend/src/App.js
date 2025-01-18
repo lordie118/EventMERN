@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { initializeUser } from './redux/slices/ConnectedSlice';
 import { useEffect } from 'react';
 import AddEvent from './components/Dashboard/dashboard/components/AddEvent';
+import { AllEvents } from './components/Dashboard/dashboard/components/AllEvents';
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
   <Route path="/signin" element = {<SignInSide />}/>
   <Route path="/signup" element = {<SignUp />}/>
   <Route path="/home" element = {<MarketingPage />}/> 
-  {/* <Route path="/e" element = {<AllEvents />}/>  */}
+  <Route path="/e" element = {<AllEvents />}/> 
 
 
   <Route element = {<PrivateRoute />}>

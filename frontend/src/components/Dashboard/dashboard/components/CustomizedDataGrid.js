@@ -121,7 +121,7 @@ export const columns = [
 ];
 
 export default function EventTable() {
-  const events = useSelector((state) => state.events.events || []);
+  const events = useSelector((state) => state.users.users || []);
   const dispatch = useDispatch();
   console.log("les events ",events);
   
@@ -133,11 +133,10 @@ export default function EventTable() {
   const rows = events.map((event) => ({
     id: event._id,
     nom: event.nom,
+    email: event.email,
+    motDePasse: event.motDePasse,
     mode: event.mode,
-    participantsCount: event.participants.length,
-    description: event.description,
-    date: new Date(event.date).toLocaleDateString('fr-FR'),
-    createdBy: event.createdBy?.nom || 'Non spécifié'
+    evenementsInscrits: event.evenementsInscrits || 'Non spécifié'
   }));
 
   return (
